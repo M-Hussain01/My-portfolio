@@ -970,7 +970,7 @@
 
                 <div class="about-text fade-in">
                     <h2>AI Engineer & Data Scientist</h2>
-                    <p>I’m a results-driven AI Engineer and Data Scientist passionate about designing intelligent systems and data-driven solutions that make a real impact.</p>
+                    <p>I'm a results-driven AI Engineer and Data Scientist passionate about designing intelligent systems and data-driven solutions that make a real impact.</p>
                     <p>My expertise spans across Python, Data Analysis, Machine Learning, and AI Model Development, with hands-on experience in crafting efficient, scalable, and smart applications.</p>
                     <p>I thrive on solving complex challenges, exploring automation, and blending analytical thinking with creativity to deliver innovative AI-powered products.</p>
                     <a href="#contact" class="btn">Contact Me</a>
@@ -1113,8 +1113,8 @@
                     </div>
                 </div>
                 <div class="contact-form fade-in">
-                    <!-- Added Formspree integration -->
-                    <form id="contactForm" action="https://formspree.io/f/xrgwdkkn" method="POST">
+                    <!-- Using mailto: approach for form submission -->
+                    <form id="contactForm">
                         <div class="form-group">
                             <label for="name">Your Name</label>
                             <input type="text" id="name" name="name" required>
@@ -1314,81 +1314,51 @@
         window.addEventListener('scroll', fadeInOnScroll);
         fadeInOnScroll(); // Run once on load
 
-        // Form submission with Formspree integration
+        // Form submission using mailto:
         const contactForm = document.getElementById('contactForm');
         
-        contactForm.addEventListener('submit', async (e) => {
+        contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
             
             // Get form values
-            const formData = new FormData(contactForm);
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
             
-            try {
-                const response = await fetch(contactForm.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-                
-                if (response.ok) {
-                    // Create success message
-                    const successMessage = document.createElement('div');
-                    successMessage.style.position = 'fixed';
-                    successMessage.style.top = '20px';
-                    successMessage.style.right = '20px';
-                    successMessage.style.background = 'linear-gradient(90deg, #00d4ff, #00ff88)';
-                    successMessage.style.color = '#0a0e27';
-                    successMessage.style.padding = '15px 20px';
-                    successMessage.style.borderRadius = '5px';
-                    successMessage.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
-                    successMessage.style.zIndex = '1000';
-                    successMessage.style.animation = 'fadeInUp 0.5s ease';
-                    successMessage.style.fontWeight = '600';
-                    successMessage.textContent = 'Message sent successfully!';
-                    
-                    document.body.appendChild(successMessage);
-                    
-                    // Reset form
-                    contactForm.reset();
-                    
-                    // Remove success message after 3 seconds
-                    setTimeout(() => {
-                        successMessage.style.animation = 'fadeOut 0.5s ease';
-                        setTimeout(() => {
-                            document.body.removeChild(successMessage);
-                        }, 500);
-                    }, 3000);
-                } else {
-                    throw new Error('Form submission failed');
-                }
-            } catch (error) {
-                // Create error message
-                const errorMessage = document.createElement('div');
-                errorMessage.style.position = 'fixed';
-                errorMessage.style.top = '20px';
-                errorMessage.style.right = '20px';
-                errorMessage.style.background = 'linear-gradient(90deg, #ff0066, #ff3366)';
-                errorMessage.style.color = '#ffffff';
-                errorMessage.style.padding = '15px 20px';
-                errorMessage.style.borderRadius = '5px';
-                errorMessage.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
-                errorMessage.style.zIndex = '1000';
-                errorMessage.style.animation = 'fadeInUp 0.5s ease';
-                errorMessage.style.fontWeight = '600';
-                errorMessage.textContent = 'Error sending message. Please try again.';
-                
-                document.body.appendChild(errorMessage);
-                
-                // Remove error message after 3 seconds
+            // Create mailto link
+            const mailtoLink = `mailto:m.hussainzahid01@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+            
+            // Open default email client
+            window.location.href = mailtoLink;
+            
+            // Create success message
+            const successMessage = document.createElement('div');
+            successMessage.style.position = 'fixed';
+            successMessage.style.top = '20px';
+            successMessage.style.right = '20px';
+            successMessage.style.background = 'linear-gradient(90deg, #00d4ff, #00ff88)';
+            successMessage.style.color = '#0a0e27';
+            successMessage.style.padding = '15px 20px';
+            successMessage.style.borderRadius = '5px';
+            successMessage.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
+            successMessage.style.zIndex = '1000';
+            successMessage.style.animation = 'fadeInUp 0.5s ease';
+            successMessage.style.fontWeight = '600';
+            successMessage.textContent = 'Opening your email client...';
+            
+            document.body.appendChild(successMessage);
+            
+            // Reset form
+            contactForm.reset();
+            
+            // Remove success message after 3 seconds
+            setTimeout(() => {
+                successMessage.style.animation = 'fadeOut 0.5s ease';
                 setTimeout(() => {
-                    errorMessage.style.animation = 'fadeOut 0.5s ease';
-                    setTimeout(() => {
-                        document.body.removeChild(errorMessage);
-                    }, 500);
-                }, 3000);
-            }
+                    document.body.removeChild(successMessage);
+                }, 500);
+            }, 3000);
         });
 
         // Typing animation
