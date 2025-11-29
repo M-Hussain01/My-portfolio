@@ -230,26 +230,35 @@ padding: 0 20px;
 }
 
 .logo {
+display: flex;
+align-items: center;
+gap: 15px;
+text-decoration: none;
+}
+
+.logo-img {
+width: 50px;
+height: 50px;
+border-radius: 50%;
+object-fit: cover;
+border: 3px solid var(--primary);
+box-shadow: 0 0 15px rgba(0, 212, 255, 0.7);
+animation: pulse 2s infinite;
+}
+
+.logo-text {
 font-family: 'Orbitron', sans-serif;
 font-size: 24px;
 font-weight: 900;
 color: var(--primary);
-text-decoration: none;
-display: flex;
-align-items: center;
-gap: 10px;
 text-transform: uppercase;
 letter-spacing: 1px;
 }
 
-.logo i {
-animation: pulse 2s infinite;
-}
-
 @keyframes pulse {
-0% { transform: scale(1); opacity: 1; }
-50% { transform: scale(1.1); opacity: 0.7; }
-100% { transform: scale(1); opacity: 1; }
+0% { transform: scale(1); box-shadow: 0 0 15px rgba(0, 212, 255, 0.7); }
+50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(0, 212, 255, 0.9); }
+100% { transform: scale(1); box-shadow: 0 0 15px rgba(0, 212, 255, 0.7); }
 }
 
 .nav-links {
@@ -870,6 +879,11 @@ transform: rotate(45deg) translate(-5px, -6px);
 .hero h1 {
 font-size: 2.5rem;
 }
+
+.logo-img {
+width: 40px;
+height: 40px;
+}
 }
 
 /* Animation Classes */
@@ -922,6 +936,48 @@ animation: holographicMove 3s infinite;
 from { opacity: 1; }
 to { opacity: 0; }
 }
+
+/* Logo Enhancement */
+.logo-enhancement {
+position: fixed;
+bottom: 20px;
+right: 20px;
+width: 120px;
+height: 120px;
+border-radius: 50%;
+background: linear-gradient(135deg, var(--primary), var(--secondary));
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 1000;
+box-shadow: 0 0 30px rgba(0, 212, 255, 0.8);
+border: 3px solid rgba(255, 255, 255, 0.3);
+overflow: hidden;
+}
+
+.logo-enhancement img {
+width: 90%;
+height: 90%;
+border-radius: 50%;
+object-fit: cover;
+}
+
+.logo-enhancement::before {
+content: '';
+position: absolute;
+top: -50%;
+left: -50%;
+width: 200%;
+height: 200%;
+background: linear-gradient(
+45deg,
+transparent 30%,
+rgba(255, 255, 255, 0.2) 50%,
+transparent 70%
+);
+transform: rotate(45deg);
+animation: holographicMove 3s infinite;
+}
 </style>
 </head>
 <body>
@@ -944,8 +1000,8 @@ to { opacity: 0; }
 <nav>
 <div class="nav-container">
 <a href="#" class="logo">
-<i class="fas fa-microchip"></i>
-MHZ
+<img src="Logo.png" alt="Logo" class="logo-img">
+<span class="logo-text">MHZ</span>
 </a>
 <ul class="nav-links">
 <li><a href="#home">Home</a></li>
@@ -1162,6 +1218,11 @@ MHZ
 <p class="footer-text">&copy; 2023 Muhammad Hussain Zahid. All Rights Reserved.</p>
 </div>
 </footer>
+
+<!-- Enhanced Logo Display -->
+<div class="logo-enhancement">
+<img src="Logo.png" alt="Logo">
+</div>
 
 <script>
 // Create particles
@@ -1420,6 +1481,72 @@ window.addEventListener('resize', () => {
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 });
+
+// Create a circular version of the logo for better favicon visibility
+function createCircularLogo() {
+    const img = new Image();
+    img.src = 'Logo.png';
+    img.onload = function() {
+        const canvas = document.createElement('canvas');
+        const size = 64;
+        canvas.width = size;
+        canvas.height = size;
+        
+        const ctx = canvas.getContext('2d');
+        
+        // Create circular clipping path
+        ctx.beginPath();
+        ctx.arc(size/2, size/2, size/2 - 2, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.clip();
+        
+        // Draw the image
+        ctx.drawImage(img, 0, 0, size, size);
+        
+        // Add border
+        ctx.beginPath();
+        ctx.arc(size/2, size/2, size/2 - 2, 0, Math.PI * 2);
+        ctx.strokeStyle = '#00d4ff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        
+        // Convert to data URL and create download link
+        const circularLogoUrl = canvas.toDataURL('image/png');
+        
+        // Create download link
+        const downloadLink = document.createElement('a');
+        downloadLink.href = circularLogoUrl;
+        downloadLink.download = 'Logo.png';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        
+        // Show notification
+        const notification = document.createElement('div');
+        notification.style.position = 'fixed';
+        notification.style.bottom = '150px';
+        notification.style.right = '20px';
+        notification.style.background = 'linear-gradient(90deg, #00d4ff, #00ff88)';
+        notification.style.color = '#0a0e27';
+        notification.style.padding = '10px 15px';
+        notification.style.borderRadius = '5px';
+        notification.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
+        notification.style.zIndex = '1000';
+        notification.style.fontWeight = '600';
+        notification.textContent = 'Circular logo created! Replace your original Logo.png with this file.';
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.animation = 'fadeOut 0.5s ease';
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 500);
+        }, 5000);
+    };
+}
+
+// Add click event to logo enhancement
+document.querySelector('.logo-enhancement').addEventListener('click', createCircularLogo);
 </script>
 </body>
 </html>
