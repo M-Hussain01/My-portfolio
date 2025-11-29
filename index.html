@@ -16,6 +16,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;900&family=Orbitron:wght@400;700;900&family=Exo+2:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="Hussain_Zahid.png" type="image/png">
     <style>
         :root {
             --primary: #00d4ff;
@@ -219,26 +220,35 @@
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .logo-img {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .logo:hover .logo-img {
+            transform: scale(1.1);
+            border-color: var(--secondary);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+        }
+
+        .logo-text {
             font-family: 'Orbitron', sans-serif;
             font-size: 24px;
             font-weight: 900;
             color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            margin-left: 10px;
             text-transform: uppercase;
             letter-spacing: 1px;
-        }
-
-        .logo i {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.7; }
-            100% { transform: scale(1); opacity: 1; }
         }
 
         .nav-links {
@@ -859,6 +869,10 @@
             .hero h1 {
                 font-size: 2.5rem;
             }
+            
+            .logo-text {
+                display: none;
+            }
         }
 
         /* Animation Classes */
@@ -933,8 +947,8 @@
     <nav>
         <div class="nav-container">
             <a href="#" class="logo">
-                <i class="fas fa-microchip"></i>
-                MHZ
+                <img src="Hussain_Zahid.png" alt="Muhammad Hussain Zahid" class="logo-img">
+                <span class="logo-text">MHZ</span>
             </a>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
