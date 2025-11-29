@@ -4,16 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>💻 Muhammad Hussain Zahid Portfolio</title>
-<!-- Enhanced Favicon Implementation -->
-<link rel="icon" href="Logo.png" type="image/png">
-<link rel="apple-touch-icon" href="Logo.png">
-<link rel="shortcut icon" href="Logo.png">
-<link rel="icon" sizes="192x192" href="Logo.png">
-<link rel="icon" sizes="128x128" href="Logo.png">
-<link rel="icon" sizes="32x32" href="Logo.png">
-<link rel="icon" sizes="16x16" href="Logo.png">
-<meta name="msapplication-TileImage" content="Logo.png">
+<!-- Fixed Favicon Implementation -->
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="icon" href="favicon.png" type="image/png" sizes="32x32">
+<link rel="icon" href="favicon.png" type="image/png" sizes="64x64">
+<link rel="icon" href="favicon.png" type="image/png" sizes="128x128">
+<link rel="apple-touch-icon" href="favicon.png">
 <meta name="msapplication-TileColor" content="#0a0e27">
+<meta name="msapplication-TileImage" content="favicon.png">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1QRY6PEX0P"></script>
 <script>
@@ -921,6 +919,27 @@ animation: holographicMove 3s infinite;
 from { opacity: 1; }
 to { opacity: 0; }
 }
+
+/* Custom Favicon Styling */
+/* This creates a visible favicon element in the page for demonstration */
+.favicon-demo {
+position: fixed;
+bottom: 20px;
+right: 20px;
+width: 64px;
+height: 64px;
+border-radius: 50%;
+background: linear-gradient(135deg, var(--primary), var(--secondary));
+display: flex;
+align-items: center;
+justify-content: center;
+color: white;
+font-weight: bold;
+font-family: 'Orbitron', sans-serif;
+z-index: 1000;
+box-shadow: 0 0 15px rgba(0, 212, 255, 0.7);
+border: 2px solid rgba(255, 255, 255, 0.3);
+}
 </style>
 </head>
 <body>
@@ -1161,6 +1180,9 @@ MHZ
 <p class="footer-text">&copy; 2023 Muhammad Hussain Zahid. All Rights Reserved.</p>
 </div>
 </footer>
+
+<!-- Favicon Demo Element -->
+<div class="favicon-demo">MHZ</div>
 
 <script>
 // Create particles
@@ -1419,6 +1441,75 @@ window.addEventListener('resize', () => {
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 });
+
+// Favicon generation and download
+function generateFavicon() {
+    const canvas = document.createElement('canvas');
+    canvas.width = 64;
+    canvas.height = 64;
+    
+    const ctx = canvas.getContext('2d');
+    
+    // Create circular background
+    ctx.beginPath();
+    ctx.arc(32, 32, 30, 0, Math.PI * 2);
+    ctx.fillStyle = '#0a0e27';
+    ctx.fill();
+    
+    // Create gradient border
+    const gradient = ctx.createLinearGradient(0, 0, 64, 64);
+    gradient.addColorStop(0, '#00d4ff');
+    gradient.addColorStop(1, '#ff00ff');
+    ctx.strokeStyle = gradient;
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    
+    // Add text
+    ctx.font = 'bold 20px Orbitron';
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('MHZ', 32, 32);
+    
+    // Convert to data URL
+    return canvas.toDataURL('image/png');
+}
+
+// Create download link for favicon
+function downloadFavicon() {
+    const faviconData = generateFavicon();
+    const downloadLink = document.createElement('a');
+    downloadLink.href = faviconData;
+    downloadLink.download = 'favicon.png';
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+    
+    // Show notification
+    const notification = document.createElement('div');
+    notification.style.position = 'fixed';
+    notification.style.bottom = '100px';
+    notification.style.right = '20px';
+    notification.style.background = 'linear-gradient(90deg, #00d4ff, #00ff88)';
+    notification.style.color = '#0a0e27';
+    notification.style.padding = '10px 15px';
+    notification.style.borderRadius = '5px';
+    notification.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
+    notification.style.zIndex = '1000';
+    notification.style.fontWeight = '600';
+    notification.textContent = 'Favicon downloaded! Upload it to your website root directory.';
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'fadeOut 0.5s ease';
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 500);
+    }, 5000);
+}
+
+// Add click event to favicon demo
+document.querySelector('.favicon-demo').addEventListener('click', downloadFavicon);
 </script>
 </body>
 </html>
